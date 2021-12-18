@@ -4,18 +4,29 @@ import React from 'react';
 //connect is higher order component
 import { connect } from 'react-redux';
 
-const CadastralList = ({ search }) => {
+const CadastralList = ({ cadastralList = [] }) => {
+  if (cadastralList.length === 0) {
+    return (
+      <section>
+        <h1>Cadastral List</h1>
+        <p>List is empty</p>
+      </section>
+    );
+  }
+
   return (
     <section>
       <h1>Cadastral List</h1>
-      {search}
+      {cadastralList.map((element, i) => {
+        return <p key={i}>{element}</p>;
+      })}
     </section>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    search: state.search,
+    cadastralList: state.cadastralList,
   };
 };
 
