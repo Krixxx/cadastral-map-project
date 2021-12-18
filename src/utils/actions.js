@@ -1,0 +1,1 @@
+export const SEARCH_CADASTRAL = 'SEARCH_CADASTRAL';
