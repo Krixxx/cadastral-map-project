@@ -13,14 +13,8 @@ import { createStore } from 'redux';
 //import react-redux Provider
 import { Provider } from 'react-redux';
 
-//initial store
-const initialStore = {
-  search: '12345:003:0022',
-  cadastralList: ['12345:003:0022', '54321:001:0011'],
-};
-
 //create redux STORE
-const store = createStore(reducer, initialStore);
+const store = createStore(reducer);
 
 function App() {
   return (

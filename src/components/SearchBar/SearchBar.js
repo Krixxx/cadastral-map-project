@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { SearchForm, SearchInput, SearchButton } from './SearchBarStyles';
 
-const SearchBar = () => {
+import { ADD_TO_CADASTRAL_ARRAY } from '../../utils/actions';
+
+import { connect } from 'react-redux';
+
+const SearchBar = ({ addToArray }) => {
   const [value, setValue] = useState('');
 
   const handleChange = (e) => {
@@ -10,7 +14,8 @@ const SearchBar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(value);
+
+    addToArray(value);
   };
   return (
     <SearchForm onSubmit={handleSubmit}>
@@ -25,4 +30,11 @@ const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addToArray: (result) =>
+      dispatch({ type: ADD_TO_CADASTRAL_ARRAY, payload: { result } }),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(SearchBar);
