@@ -25,14 +25,16 @@ const store = createStore(reducer, initialStore);
 function App() {
   return (
     <Provider store={store}>
-      <SearchBar />
-      <Main>
-        <MapView />
-        <section>
-          <AddressInfo />
-          <CadastralList />
-        </section>
-      </Main>
+      <section className='section-center'>
+        <SearchBar />
+        <Main>
+          <MapView />
+          <section>
+            <AddressInfo />
+            <CadastralList />
+          </section>
+        </Main>
+      </section>
     </Provider>
   );
 }
