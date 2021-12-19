@@ -12,6 +12,13 @@ import { connect } from 'react-redux';
 
 const SearchBar = ({ addToArray }) => {
   const [value, setValue] = useState('');
+  const [error, setError] = useState('');
+
+  //kaardirakenduse päringute tegemine
+  // https://geoportaal.maaamet.ee/est/Teenused/Poordumine-kaardirakendusse-labi-URLi-p9.html#xgis2-ky-tunnus
+
+  //validate cadastral number format
+  const regex = new RegExp(/^(([0-9]{5})+:+([0-9]{3})+:+([0-9]{4}))$/);
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -20,8 +27,13 @@ const SearchBar = ({ addToArray }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    addToArray(value);
-    setValue('');
+    //check for regex match
+    if (regex.test(value)) {
+      addToArray(value);
+      setValue('');
+    } else {
+      setError('Katastri number pole korrektne');
+    }
   };
   return (
     <SearchBarDiv>
