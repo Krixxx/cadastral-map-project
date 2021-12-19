@@ -2,8 +2,11 @@ import { ADD_TO_CADASTRAL_ARRAY } from '../utils/actions';
 
 //initial store
 const initialStore = {
-  search: '12345:003:0022',
-  cadastralList: ['12345:003:0022', '54321:001:0011'],
+  cadastralList: [],
+  bounds: [
+    [58.684863567395, 23.837261336526],
+    [58.687561865801, 23.84372545375222],
+  ],
 };
 
 function reducer(state = initialStore, action) {

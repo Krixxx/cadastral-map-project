@@ -1,6 +1,8 @@
 import React from 'react';
 import { Map } from './MapViewStyles';
 
+import { connect } from 'react-redux';
+
 import {
   MapContainer,
   TileLayer,
@@ -10,13 +12,10 @@ import {
   Tooltip,
 } from 'react-leaflet';
 
-const MapView = () => {
+const MapView = ({ bounds = [] }) => {
   const position = [58.6858732964, 23.8404949068];
 
-  const rectangle = [
-    [58.684863567395, 23.837261336526],
-    [58.687561865801, 23.84372545375222],
-  ];
+  const rectangle = bounds;
 
   const blackOptions = { color: 'black' };
 
@@ -42,4 +41,10 @@ const MapView = () => {
   );
 };
 
-export default MapView;
+const mapStateToProps = (state) => {
+  return {
+    bounds: state.bounds,
+  };
+};
+
+export default connect(mapStateToProps)(MapView);
