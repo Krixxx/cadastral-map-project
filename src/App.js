@@ -39,6 +39,7 @@ function App() {
 const Main = styled.section`
   display: flex;
   justify-content: space-between;
+  height: calc(100vh - 53px);
 `;
 
 export default App;

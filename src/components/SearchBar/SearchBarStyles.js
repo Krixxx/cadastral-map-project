@@ -8,16 +8,16 @@ const SearchBarDiv = styled.div`
 `;
 
 const SearchForm = styled.form`
-  padding: 1rem;
+  padding: 0.75rem;
 `;
 
 const SearchInput = styled.input`
-  padding: 0.25rem;
+  padding: 0.3rem;
 `;
 
 const SearchButton = styled.input`
   margin-left: 0.5rem;
-  padding: 0.25rem;
+  padding: 0.3rem;
 `;
 
 export { SearchBarDiv, SearchForm, SearchInput, SearchButton };
