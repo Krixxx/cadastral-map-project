@@ -22,11 +22,11 @@ const store = createStore(
 function App() {
   return (
     <Provider store={store}>
+      <SearchBar />
       <section className='section-center'>
-        <SearchBar />
         <Main>
           <MapView />
-          <section>
+          <section className='sidebar'>
             <AddressInfo />
             <CadastralList />
           </section>

@@ -1,5 +1,10 @@
 import React, { useState } from 'react';
-import { SearchForm, SearchInput, SearchButton } from './SearchBarStyles';
+import {
+  SearchBarDiv,
+  SearchForm,
+  SearchInput,
+  SearchButton,
+} from './SearchBarStyles';
 
 import { ADD_TO_CADASTRAL_ARRAY } from '../../utils/actions';
 
@@ -16,17 +21,20 @@ const SearchBar = ({ addToArray }) => {
     e.preventDefault();
 
     addToArray(value);
+    setValue('');
   };
   return (
-    <SearchForm onSubmit={handleSubmit}>
-      <SearchInput
-        type='text'
-        placeholder='katastrinumber'
-        value={value}
-        onChange={handleChange}
-      />
-      <SearchButton type='submit' value='Search' />
-    </SearchForm>
+    <SearchBarDiv>
+      <SearchForm onSubmit={handleSubmit}>
+        <SearchInput
+          type='text'
+          placeholder='katastrinumber'
+          value={value}
+          onChange={handleChange}
+        />
+        <SearchButton type='submit' value='Search' />
+      </SearchForm>
+    </SearchBarDiv>
   );
 };
 

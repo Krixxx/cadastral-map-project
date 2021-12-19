@@ -1,8 +1,14 @@
 import styled from 'styled-components';
 
+const SearchBarDiv = styled.div`
+  background-color: grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const SearchForm = styled.form`
-  font-size: 2rem;
-  text-align: center;
+  padding: 1rem;
 `;
 
 const SearchInput = styled.input`
@@ -14,4 +20,4 @@ const SearchButton = styled.input`
   padding: 0.25rem;
 `;
 
-export { SearchForm, SearchInput, SearchButton };
+export { SearchBarDiv, SearchForm, SearchInput, SearchButton };
