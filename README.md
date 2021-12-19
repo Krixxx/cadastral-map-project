@@ -5,3 +5,5 @@ Installed libraries:
 - styled-components
 - redux
 - react-redux
+- leaflet
+- react-leaflet
