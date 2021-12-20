@@ -7,6 +7,10 @@ const ItemDiv = styled.div`
   align-items: center;
 `;
 
+const Text = styled.p`
+  cursor: pointer;
+`;
+
 const DeleteButton = styled.button`
   border: none;
   background-color: transparent;
@@ -14,4 +18,4 @@ const DeleteButton = styled.button`
   cursor: pointer;
 `;
 
-export { ItemDiv, DeleteButton };
+export { ItemDiv, Text, DeleteButton };

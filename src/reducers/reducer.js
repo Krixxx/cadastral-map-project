@@ -1,4 +1,4 @@
-import { ADD_TO_CADASTRAL_ARRAY } from '../utils/actions';
+import { ADD_TO_CADASTRAL_ARRAY, REFRESH_ARRAY } from '../utils/actions';
 
 //initial store
 const initialStore = {
@@ -14,6 +14,12 @@ function reducer(state = initialStore, action) {
     return {
       ...state,
       cadastralList: [...state.cadastralList, action.payload.result],
+    };
+  }
+  if (action.type === REFRESH_ARRAY) {
+    return {
+      ...state,
+      cadastralList: action.payload.list,
     };
   }
   return state;
