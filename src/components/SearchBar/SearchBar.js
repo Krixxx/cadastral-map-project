@@ -20,6 +20,15 @@ const SearchBar = ({ addToArray }) => {
   //validate cadastral number format
   const regex = new RegExp(/^(([0-9]{5})+:+([0-9]{3})+:+([0-9]{4}))$/);
 
+  // get initial array from localStorage if present and then add new cadastral number to array
+  const saveToLocalStorage = (value) => {
+    let array = JSON.parse(localStorage.getItem('cadastralArray') || '[]');
+
+    array.push(value);
+
+    localStorage.setItem('cadastralArray', JSON.stringify(array));
+  };
+
   const handleChange = (e) => {
     setValue(e.target.value);
   };
@@ -29,9 +38,19 @@ const SearchBar = ({ addToArray }) => {
 
     //check for regex match
     if (regex.test(value)) {
+      //add cadastral number to localStorage
+      saveToLocalStorage(value);
+
+      // add cadastral number to redux state
       addToArray(value);
+
+      //clear error
+      setError('');
+
+      //clear input
       setValue('');
     } else {
+      //set error
       setError('Katastri number pole korrektne');
     }
   };

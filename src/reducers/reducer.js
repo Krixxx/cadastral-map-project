@@ -2,7 +2,7 @@ import { ADD_TO_CADASTRAL_ARRAY } from '../utils/actions';
 
 //initial store
 const initialStore = {
-  cadastralList: [],
+  cadastralList: JSON.parse(localStorage.getItem('cadastralArray')) || [],
   bounds: [
     [58.684863567395, 23.837261336526],
     [58.687561865801, 23.84372545375222],
