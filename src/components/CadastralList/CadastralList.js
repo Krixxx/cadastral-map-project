@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { SingleItem } from '../';
+
 //connect redux
 //connect is higher order component
 import { connect } from 'react-redux';
@@ -18,7 +20,7 @@ const CadastralList = ({ cadastralList = [] }) => {
     <section>
       <h1>Cadastral List</h1>
       {cadastralList.map((element, i) => {
-        return <p key={i}>{element}</p>;
+        return <SingleItem key={i} item={element} />;
       })}
     </section>
   );
