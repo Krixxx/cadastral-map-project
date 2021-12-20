@@ -1,4 +1,8 @@
-import { ADD_TO_CADASTRAL_ARRAY, REFRESH_ARRAY } from '../utils/actions';
+import {
+  ADD_TO_CADASTRAL_ARRAY,
+  REFRESH_ARRAY,
+  SET_SELECTED_ITEM,
+} from '../utils/actions';
 
 //initial store
 const initialStore = {
@@ -7,6 +11,7 @@ const initialStore = {
     [58.684863567395, 23.837261336526],
     [58.687561865801, 23.84372545375222],
   ],
+  activeObject: '',
 };
 
 function reducer(state = initialStore, action) {
@@ -20,6 +25,12 @@ function reducer(state = initialStore, action) {
     return {
       ...state,
       cadastralList: action.payload.list,
+    };
+  }
+  if (action.type === SET_SELECTED_ITEM) {
+    return {
+      ...state,
+      activeObject: action.payload.item,
     };
   }
   return state;
