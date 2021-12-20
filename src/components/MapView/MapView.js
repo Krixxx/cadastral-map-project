@@ -13,7 +13,7 @@ import {
 } from 'react-leaflet';
 
 const MapView = ({ bounds = [] }) => {
-  const position = [58.6858732964, 23.8404949068];
+  const position = [59.43696, 24.75353];
 
   const rectangle = bounds;
 
@@ -31,11 +31,17 @@ const MapView = ({ bounds = [] }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
-        <Rectangle bounds={rectangle} pathOptions={blackOptions}>
-          <Tooltip direction='bottom' offset={[0, 20]} opacity={1} sticky>
-            This is this place
-          </Tooltip>
-        </Rectangle>
+        {rectangle.length !== 0 ? (
+          <Rectangle bounds={rectangle} pathOptions={blackOptions}>
+            <Tooltip direction='bottom' offset={[0, 20]} opacity={1} sticky>
+              This is this place
+            </Tooltip>
+          </Rectangle>
+        ) : (
+          <Marker position={position}>
+            <Popup>Tallinn</Popup>
+          </Marker>
+        )}
       </MapContainer>
     </Map>
   );
