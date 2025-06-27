@@ -1,23 +1,23 @@
 //import components
-import { SearchBar, MapView, AddressInfo, CadastralList } from './components';
+import { SearchBar, MapView, AddressInfo, CadastralList } from './components'
 
 //import Styled Components
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 //import reducer
-import reducer from './reducers/reducer';
+import reducer from './reducers/reducer'
 
-//import createStore for redux
-import { createStore } from 'redux';
+//import configureStore from Redux Toolkit
+import { configureStore } from '@reduxjs/toolkit'
 
 //import react-redux Provider
-import { Provider } from 'react-redux';
+import { Provider } from 'react-redux'
 
-//create redux STORE
-const store = createStore(
-  reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+//create redux STORE with Redux Toolkit
+const store = configureStore({
+  reducer: reducer,
+  devTools: process.env.NODE_ENV !== 'production',
+})
 
 function App() {
   return (
@@ -33,13 +33,13 @@ function App() {
         </Main>
       </section>
     </Provider>
-  );
+  )
 }
 
 const Main = styled.section`
   display: flex;
   justify-content: space-between;
   height: calc(100vh - 53px);
-`;
+`
 
-export default App;
+export default App

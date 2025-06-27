@@ -1,7 +1,7 @@
-import React from 'react';
-import { Map } from './MapViewStyles';
+import React from 'react'
+import { Map } from './MapViewStyles'
 
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux'
 
 import {
   MapContainer,
@@ -10,14 +10,15 @@ import {
   Popup,
   Rectangle,
   Tooltip,
-} from 'react-leaflet';
+} from 'react-leaflet'
 
-const MapView = ({ bounds = [] }) => {
-  const position = [59.43696, 24.75353];
+const MapView = () => {
+  const bounds = useSelector((state) => state.bounds)
+  const position = [59.43696, 24.75353]
 
-  const rectangle = bounds;
+  const rectangle = bounds
 
-  const blackOptions = { color: 'black' };
+  const blackOptions = { color: 'black' }
 
   // Maaametist tulevad koordinaadid on L-EST formaadis ning need tuleb teisendada GEO formaati
   // rohkem infot siin: https://gpa.maaamet.ee/calc/geo-lest/url/
@@ -44,13 +45,7 @@ const MapView = ({ bounds = [] }) => {
         )}
       </MapContainer>
     </Map>
-  );
-};
+  )
+}
 
-const mapStateToProps = (state) => {
-  return {
-    bounds: state.bounds,
-  };
-};
-
-export default connect(mapStateToProps)(MapView);
+export default MapView

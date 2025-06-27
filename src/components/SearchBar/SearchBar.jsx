@@ -1,59 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   SearchBarDiv,
   SearchForm,
   SearchInput,
   SearchButton,
-} from './SearchBarStyles';
+} from './SearchBarStyles'
 
-import { ADD_TO_CADASTRAL_ARRAY } from '../../utils/actions';
+import { ADD_TO_CADASTRAL_ARRAY } from '../../utils/actions'
 
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux'
 
-const SearchBar = ({ addToArray }) => {
-  const [value, setValue] = useState('');
-  const [error, setError] = useState('');
+const SearchBar = () => {
+  const dispatch = useDispatch()
+  const [value, setValue] = useState('')
+  const [error, setError] = useState('')
 
   //kaardirakenduse päringute tegemine
   // https://geoportaal.maaamet.ee/est/Teenused/Poordumine-kaardirakendusse-labi-URLi-p9.html#xgis2-ky-tunnus
 
   //validate cadastral number format
-  const regex = new RegExp(/^(([0-9]{5})+:+([0-9]{3})+:+([0-9]{4}))$/);
+  const regex = new RegExp(/^(([0-9]{5})+:+([0-9]{3})+:+([0-9]{4}))$/)
 
   // get initial array from localStorage if present and then add new cadastral number to array
   const saveToLocalStorage = (value) => {
-    let array = JSON.parse(localStorage.getItem('cadastralArray') || '[]');
+    let array = JSON.parse(localStorage.getItem('cadastralArray') || '[]')
 
-    array.push(value);
+    array.push(value)
 
-    localStorage.setItem('cadastralArray', JSON.stringify(array));
-  };
+    localStorage.setItem('cadastralArray', JSON.stringify(array))
+  }
 
   const handleChange = (e) => {
-    setValue(e.target.value);
-  };
+    setValue(e.target.value)
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     //check for regex match
     if (regex.test(value)) {
       //add cadastral number to localStorage
-      saveToLocalStorage(value);
+      saveToLocalStorage(value)
 
       // add cadastral number to redux state
-      addToArray(value);
+      dispatch({ type: ADD_TO_CADASTRAL_ARRAY, payload: { result: value } })
 
       //clear error
-      setError('');
+      setError('')
 
       //clear input
-      setValue('');
+      setValue('')
     } else {
       //set error
-      setError('Katastri number pole korrektne');
+      setError('Katastri number pole korrektne')
     }
-  };
+  }
+
   return (
     <SearchBarDiv>
       <SearchForm onSubmit={handleSubmit}>
@@ -66,14 +68,7 @@ const SearchBar = ({ addToArray }) => {
         <SearchButton type='submit' value='Search' />
       </SearchForm>
     </SearchBarDiv>
-  );
-};
+  )
+}
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addToArray: (result) =>
-      dispatch({ type: ADD_TO_CADASTRAL_ARRAY, payload: { result } }),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(SearchBar);
+export default SearchBar
