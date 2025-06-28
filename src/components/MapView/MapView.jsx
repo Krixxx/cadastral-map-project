@@ -240,9 +240,13 @@ const MapView = () => {
                 ? selectedAreaOptions
                 : savedAreaOptions
             }
-            eventHandlers={{
-              click: () => centerOnArea(area.id),
-            }}
+            eventHandlers={
+              !drawingMode
+                ? {
+                    click: () => centerOnArea(area.id),
+                  }
+                : {}
+            }
           >
             <Tooltip direction='bottom' offset={[0, 20]} opacity={1} sticky>
               <div>
@@ -254,7 +258,11 @@ const MapView = () => {
                 <br />
                 Points: {area.polygon.length}
                 <br />
-                <em>Click to center view</em>
+                <em>
+                  {drawingMode
+                    ? 'Joonistamine aktiivne - klõpsa kaardil punkti lisamiseks'
+                    : 'Klõpsa, et kinnistu tsentreerida'}
+                </em>
               </div>
             </Tooltip>
           </Polygon>
