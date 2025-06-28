@@ -84,10 +84,10 @@ const SavedAreasList = () => {
   if (savedAreas.length === 0) {
     return (
       <Container>
-        <Title>Saved Cadastral Areas</Title>
+        <Title>Salvestatud kinnistud</Title>
         <EmptyMessage>
-          No saved areas yet. Draw a polygon to create your first cadastral
-          area.
+          Pole salvestatud kinnistusi. Joonista kinnistu, et luua esimene
+          kinnistu.
         </EmptyMessage>
       </Container>
     )
@@ -95,12 +95,11 @@ const SavedAreasList = () => {
 
   return (
     <Container>
-      <Title>Saved Cadastral Areas ({savedAreas.length})</Title>
+      <Title>Salvestatud kinnistud ({savedAreas.length})</Title>
 
       {/* Ühistu group header */}
       <GroupHeader onClick={handleCenterOnAllAreas}>
         <h3>Ühistu</h3>
-        <span>Click to view all areas</span>
       </GroupHeader>
 
       {savedAreas.map((area) => (
@@ -122,16 +121,16 @@ const SavedAreasList = () => {
           </AreaHeader>
           <AreaDetails>
             <div>
-              <strong>Contact:</strong> {area.contactName}
+              <strong>Kontakt:</strong> {area.contactName}
             </div>
             <div>
-              <strong>Phone:</strong> {area.contactNumber}
+              <strong>Telefon:</strong> {area.contactNumber}
             </div>
             <div>
-              <strong>Points:</strong> {area.polygon.length}
+              <strong>Nurgad:</strong> {area.polygon.length}
             </div>
             <div>
-              <strong>Created:</strong> {formatDate(area.createdAt)}
+              <strong>Loomise aeg:</strong> {formatDate(area.createdAt)}
             </div>
           </AreaDetails>
         </AreaItem>

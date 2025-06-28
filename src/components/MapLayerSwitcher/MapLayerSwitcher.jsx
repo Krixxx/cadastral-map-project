@@ -35,7 +35,7 @@ const MapLayerSwitcher = () => {
           onClick={() => handleLayerSwitch('street')}
         >
           <LayerIcon>🗺️</LayerIcon>
-          <ToggleLabel>Street</ToggleLabel>
+          <ToggleLabel>Kaart</ToggleLabel>
         </ToggleButton>
 
         <ToggleButton
@@ -43,7 +43,7 @@ const MapLayerSwitcher = () => {
           onClick={() => handleLayerSwitch('aerial')}
         >
           <LayerIcon>🛰️</LayerIcon>
-          <ToggleLabel>Aerial</ToggleLabel>
+          <ToggleLabel>Satelliit</ToggleLabel>
         </ToggleButton>
       </ToggleContainer>
     </SwitcherContainer>

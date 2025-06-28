@@ -63,10 +63,10 @@ const DrawingControls = () => {
               disabled={currentPolygon.length < 3}
               primary
             >
-              Finish Drawing ({currentPolygon.length} points)
+              Lõpeta joonistamine, ({currentPolygon.length} punkti)
             </Button>
             <Button onClick={handleCancelDrawing} secondary>
-              Cancel
+              Tühista
             </Button>
           </div>
         </>

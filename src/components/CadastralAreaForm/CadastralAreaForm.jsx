@@ -34,17 +34,17 @@ const CadastralAreaForm = () => {
     const newErrors = {}
 
     if (!formData.lotName.trim()) {
-      newErrors.lotName = 'Lot name is required'
+      newErrors.lotName = 'Kinnistu nimi on vajalik'
     }
 
     if (!formData.contactName.trim()) {
-      newErrors.contactName = 'Contact name is required'
+      newErrors.contactName = 'Kontakti nimi on vajalik'
     }
 
     if (!formData.contactNumber.trim()) {
-      newErrors.contactNumber = 'Contact number is required'
+      newErrors.contactNumber = 'Kontakti number on vajalik'
     } else if (!/^[\d\s\-\+\(\)]+$/.test(formData.contactNumber.trim())) {
-      newErrors.contactNumber = 'Please enter a valid phone number'
+      newErrors.contactNumber = 'Sisesta kehtiv number'
     }
 
     setErrors(newErrors)
@@ -112,30 +112,30 @@ const CadastralAreaForm = () => {
 
   return (
     <FormContainer>
-      <FormTitle>Save Cadastral Area</FormTitle>
+      <FormTitle>Salvesta kinnistu</FormTitle>
       <FormGroup>
-        <Label htmlFor='lotName'>Lot Name *</Label>
+        <Label htmlFor='lotName'>Kinnistu nimi *</Label>
         <Input
           type='text'
           id='lotName'
           name='lotName'
           value={formData.lotName}
           onChange={handleInputChange}
-          placeholder='Enter lot name'
+          placeholder='Sisesta kinnistu nimi'
           hasError={!!errors.lotName}
         />
         {errors.lotName && <span className='error'>{errors.lotName}</span>}
       </FormGroup>
 
       <FormGroup>
-        <Label htmlFor='contactName'>Contact Name *</Label>
+        <Label htmlFor='contactName'>Kontakti nimi *</Label>
         <Input
           type='text'
           id='contactName'
           name='contactName'
           value={formData.contactName}
           onChange={handleInputChange}
-          placeholder='Enter contact name'
+          placeholder='Sisesta kontakti nimi'
           hasError={!!errors.contactName}
         />
         {errors.contactName && (
@@ -144,14 +144,14 @@ const CadastralAreaForm = () => {
       </FormGroup>
 
       <FormGroup>
-        <Label htmlFor='contactNumber'>Contact Number *</Label>
+        <Label htmlFor='contactNumber'>Kontakti number *</Label>
         <Input
           type='tel'
           id='contactNumber'
           name='contactNumber'
           value={formData.contactNumber}
           onChange={handleInputChange}
-          placeholder='Enter contact number'
+          placeholder='Sisesta kontakti number'
           hasError={!!errors.contactNumber}
         />
         {errors.contactNumber && (
@@ -161,10 +161,10 @@ const CadastralAreaForm = () => {
 
       <ButtonGroup>
         <Button onClick={handleSave} primary>
-          Save Area
+          Salvesta
         </Button>
         <Button onClick={handleCancel} secondary>
-          Cancel
+          Tühista
         </Button>
       </ButtonGroup>
     </FormContainer>
