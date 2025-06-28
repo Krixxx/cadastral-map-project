@@ -4,16 +4,28 @@ import {
   SearchForm,
   SearchInput,
   SearchButton,
+  ErrorMessage,
+  LoadingSpinner,
 } from './SearchBarStyles'
 
-import { ADD_TO_CADASTRAL_ARRAY } from '../../utils/actions'
+import {
+  ADD_TO_CADASTRAL_ARRAY,
+  SET_CADASTRAL_DATA,
+  SET_LOADING,
+  SET_ERROR,
+  CLEAR_ERROR,
+} from '../../utils/actions'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCadastralData } from '../../utils/cadastralApi'
 
 const SearchBar = () => {
   const dispatch = useDispatch()
   const [value, setValue] = useState('')
-  const [error, setError] = useState('')
+  const [localError, setLocalError] = useState('')
+
+  const loading = useSelector((state) => state.loading)
+  const error = useSelector((state) => state.error)
 
   //kaardirakenduse päringute tegemine
   // https://geoportaal.maaamet.ee/est/Teenused/Poordumine-kaardirakendusse-labi-URLi-p9.html#xgis2-ky-tunnus
@@ -32,27 +44,58 @@ const SearchBar = () => {
 
   const handleChange = (e) => {
     setValue(e.target.value)
+    // Clear errors when user starts typing
+    if (localError) {
+      setLocalError('')
+    }
+    if (error) {
+      dispatch({ type: CLEAR_ERROR })
+    }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     //check for regex match
-    if (regex.test(value)) {
-      //add cadastral number to localStorage
+    if (!regex.test(value)) {
+      setLocalError('Katastri number pole korrektne')
+      return
+    }
+
+    try {
+      // Set loading state
+      dispatch({ type: SET_LOADING, payload: { loading: true } })
+
+      // Clear any previous errors
+      dispatch({ type: CLEAR_ERROR })
+      setLocalError('')
+
+      // Fetch cadastral data from API
+      const cadastralData = await fetchCadastralData(value)
+
+      // Add cadastral number to localStorage
       saveToLocalStorage(value)
 
-      // add cadastral number to redux state
+      // Add cadastral number to redux state
       dispatch({ type: ADD_TO_CADASTRAL_ARRAY, payload: { result: value } })
 
-      //clear error
-      setError('')
+      // Set cadastral data in redux state
+      dispatch({
+        type: SET_CADASTRAL_DATA,
+        payload: { data: cadastralData },
+      })
 
-      //clear input
+      // Clear input
       setValue('')
-    } else {
-      //set error
-      setError('Katastri number pole korrektne')
+    } catch (error) {
+      console.error('Search error:', error)
+      dispatch({
+        type: SET_ERROR,
+        payload: { error: error.message || 'Viga katastriandmete laadimisel' },
+      })
+    } finally {
+      // Clear loading state
+      dispatch({ type: SET_LOADING, payload: { loading: false } })
     }
   }
 
@@ -61,12 +104,18 @@ const SearchBar = () => {
       <SearchForm onSubmit={handleSubmit}>
         <SearchInput
           type='text'
-          placeholder='katastrinumber'
+          placeholder='katastrinumber (nt: 12345:123:1234)'
           value={value}
           onChange={handleChange}
+          disabled={loading}
         />
-        <SearchButton type='submit' value='Search' />
+        <SearchButton type='submit' value='Search' disabled={loading}>
+          {loading ? <LoadingSpinner /> : 'Search'}
+        </SearchButton>
       </SearchForm>
+      {(localError || error) && (
+        <ErrorMessage>{localError || error}</ErrorMessage>
+      )}
     </SearchBarDiv>
   )
 }
