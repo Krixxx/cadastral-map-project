@@ -1,6 +1,11 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { DELETE_CADASTRAL_AREA } from '../../utils/actions'
+import {
+  DELETE_CADASTRAL_AREA,
+  CENTER_ON_ALL_AREAS,
+  CENTER_ON_AREA,
+  SET_SELECTED_AREA,
+} from '../../utils/actions'
 import {
   Container,
   Title,
@@ -9,6 +14,7 @@ import {
   AreaDetails,
   DeleteButton,
   EmptyMessage,
+  GroupHeader,
 } from './SavedAreasListStyles'
 
 /**
@@ -18,6 +24,7 @@ import {
 const SavedAreasList = () => {
   const dispatch = useDispatch()
   const savedAreas = useSelector((state) => state.savedCadastralAreas)
+  const selectedAreaId = useSelector((state) => state.selectedAreaId)
 
   /**
    * Deletes a cadastral area by ID
@@ -31,6 +38,34 @@ const SavedAreasList = () => {
         payload: { id },
       })
     }
+  }
+
+  /**
+   * Centers the view on all areas
+   */
+  const handleCenterOnAllAreas = () => {
+    dispatch({
+      type: CENTER_ON_ALL_AREAS,
+    })
+    // Clear selection when viewing all areas
+    dispatch({
+      type: SET_SELECTED_AREA,
+      payload: { areaId: null },
+    })
+  }
+
+  /**
+   * Centers the view on a specific area and selects it
+   */
+  const handleCenterOnArea = (areaId) => {
+    dispatch({
+      type: CENTER_ON_AREA,
+      payload: { areaId },
+    })
+    dispatch({
+      type: SET_SELECTED_AREA,
+      payload: { areaId },
+    })
   }
 
   /**
@@ -61,11 +96,29 @@ const SavedAreasList = () => {
   return (
     <Container>
       <Title>Saved Cadastral Areas ({savedAreas.length})</Title>
+
+      {/* Ühistu group header */}
+      <GroupHeader onClick={handleCenterOnAllAreas}>
+        <h3>Ühistu</h3>
+        <span>Click to view all areas</span>
+      </GroupHeader>
+
       {savedAreas.map((area) => (
-        <AreaItem key={area.id}>
+        <AreaItem
+          key={area.id}
+          onClick={() => handleCenterOnArea(area.id)}
+          className={area.id === selectedAreaId ? 'selected' : ''}
+        >
           <AreaHeader>
-            <h4>{area.lotName}</h4>
-            <DeleteButton onClick={() => handleDelete(area.id)}>×</DeleteButton>
+            <h4 style={{ cursor: 'pointer' }}>{area.lotName}</h4>
+            <DeleteButton
+              onClick={(e) => {
+                e.stopPropagation() // Prevent triggering the area click
+                handleDelete(area.id)
+              }}
+            >
+              ×
+            </DeleteButton>
           </AreaHeader>
           <AreaDetails>
             <div>

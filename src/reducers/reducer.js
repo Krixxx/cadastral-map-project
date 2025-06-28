@@ -7,6 +7,11 @@ import {
   DELETE_CADASTRAL_AREA,
   SET_DRAWING_MODE,
   SET_MAP_LAYER,
+  CENTER_ON_ALL_AREAS,
+  CENTER_ON_AREA,
+  RESET_CENTER_TARGET,
+  SET_SELECTED_AREA,
+  SET_INITIAL_STATE_LOADED,
 } from '../utils/actions'
 
 //initial store
@@ -18,6 +23,12 @@ const initialStore = {
     JSON.parse(localStorage.getItem('savedCadastralAreas')) || [],
   // Map layer state
   mapLayer: localStorage.getItem('mapLayer') || 'street',
+  // Map centering state
+  centerTarget: null, // null, 'all', or area ID
+  // Selection state
+  selectedAreaId: null, // ID of currently selected area
+  // Initialization state
+  isInitialStateLoaded: false, // Whether Redux state has been loaded from localStorage
 }
 
 function reducer(state = initialStore, action) {
@@ -83,6 +94,36 @@ function reducer(state = initialStore, action) {
     return {
       ...state,
       mapLayer: action.payload.layer,
+    }
+  }
+  if (action.type === CENTER_ON_ALL_AREAS) {
+    return {
+      ...state,
+      centerTarget: 'all',
+    }
+  }
+  if (action.type === CENTER_ON_AREA) {
+    return {
+      ...state,
+      centerTarget: action.payload.areaId,
+    }
+  }
+  if (action.type === RESET_CENTER_TARGET) {
+    return {
+      ...state,
+      centerTarget: null,
+    }
+  }
+  if (action.type === SET_SELECTED_AREA) {
+    return {
+      ...state,
+      selectedAreaId: action.payload.areaId,
+    }
+  }
+  if (action.type === SET_INITIAL_STATE_LOADED) {
+    return {
+      ...state,
+      isInitialStateLoaded: true,
     }
   }
   return state

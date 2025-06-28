@@ -31,11 +31,11 @@ function App() {
       <Main>
         <MapContainer>
           <MapView />
-          <DrawingControls />
           <MapLayerSwitcher />
           <CadastralAreaForm />
         </MapContainer>
         <Sidebar>
+          <DrawingControls />
           <SavedAreasList />
         </Sidebar>
       </Main>
@@ -59,6 +59,7 @@ const Sidebar = styled.section`
   background: #f8f9fa;
   border-left: 1px solid #e0e0e0;
   overflow-y: auto;
+  height: 100%;
 `
 
 export default App

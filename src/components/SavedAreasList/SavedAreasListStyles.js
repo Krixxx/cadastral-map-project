@@ -6,7 +6,6 @@ export const Container = styled.div`
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   margin: 20px;
-  max-height: 400px;
   overflow-y: auto;
 `
 
@@ -25,10 +24,23 @@ export const AreaItem = styled.div`
   margin-bottom: 15px;
   background: #fafafa;
   transition: all 0.2s ease;
+  cursor: pointer;
 
   &:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    border-color: #ccc;
+    border-color: #007bff;
+    background: #f0f8ff;
+  }
+
+  &.selected {
+    border-color: #007bff;
+    background: #f0f8ff;
+    box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+
+    &:hover {
+      border-color: #0056b3;
+      background: #e6f3ff;
+    }
   }
 `
 
@@ -92,4 +104,32 @@ export const EmptyMessage = styled.div`
   color: #666;
   font-style: italic;
   padding: 40px 20px;
+`
+
+export const GroupHeader = styled.div`
+  background: #007bff;
+  color: white;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:hover {
+    background: #0056b3;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  span {
+    font-size: 14px;
+    opacity: 0.9;
+  }
 `

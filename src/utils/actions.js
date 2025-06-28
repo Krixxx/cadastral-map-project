@@ -9,3 +9,14 @@ export const SET_DRAWING_MODE = 'SET_DRAWING_MODE'
 
 // Map layer actions
 export const SET_MAP_LAYER = 'SET_MAP_LAYER'
+
+// Map centering actions
+export const CENTER_ON_ALL_AREAS = 'CENTER_ON_ALL_AREAS'
+export const CENTER_ON_AREA = 'CENTER_ON_AREA'
+export const RESET_CENTER_TARGET = 'RESET_CENTER_TARGET'
+
+// Selection actions
+export const SET_SELECTED_AREA = 'SET_SELECTED_AREA'
+
+// Initialization actions
+export const SET_INITIAL_STATE_LOADED = 'SET_INITIAL_STATE_LOADED'
