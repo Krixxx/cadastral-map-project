@@ -1,7 +1,13 @@
-import SearchBar from './SearchBar/SearchBar';
-import MapView from './MapView/MapView';
-import AddressInfo from './AddressInfo/AddressInfo';
-import CadastralList from './CadastralList/CadastralList';
-import SingleItem from './SingleItem/SingleItem';
+import MapView from './MapView/MapView'
+import DrawingControls from './DrawingControls/DrawingControls'
+import CadastralAreaForm from './CadastralAreaForm/CadastralAreaForm'
+import SavedAreasList from './SavedAreasList/SavedAreasList'
+import MapLayerSwitcher from './MapLayerSwitcher/MapLayerSwitcher'
 
-export { SearchBar, MapView, AddressInfo, CadastralList, SingleItem };
+export {
+  MapView,
+  DrawingControls,
+  CadastralAreaForm,
+  SavedAreasList,
+  MapLayerSwitcher,
+}

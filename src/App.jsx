@@ -1,5 +1,11 @@
 //import components
-import { SearchBar, MapView, AddressInfo, CadastralList } from './components'
+import {
+  MapView,
+  DrawingControls,
+  CadastralAreaForm,
+  SavedAreasList,
+  MapLayerSwitcher,
+} from './components'
 
 //import Styled Components
 import styled from 'styled-components'
@@ -22,16 +28,17 @@ const store = configureStore({
 function App() {
   return (
     <Provider store={store}>
-      <SearchBar />
-      <section className='section-center'>
-        <Main>
+      <Main>
+        <MapContainer>
           <MapView />
-          <section className='sidebar'>
-            <AddressInfo />
-            <CadastralList />
-          </section>
-        </Main>
-      </section>
+          <DrawingControls />
+          <MapLayerSwitcher />
+          <CadastralAreaForm />
+        </MapContainer>
+        <Sidebar>
+          <SavedAreasList />
+        </Sidebar>
+      </Main>
     </Provider>
   )
 }
@@ -39,7 +46,19 @@ function App() {
 const Main = styled.section`
   display: flex;
   justify-content: space-between;
-  height: calc(100vh - 53px);
+  height: 100vh;
+`
+
+const MapContainer = styled.div`
+  position: relative;
+  flex: 1;
+`
+
+const Sidebar = styled.section`
+  width: 350px;
+  background: #f8f9fa;
+  border-left: 1px solid #e0e0e0;
+  overflow-y: auto;
 `
 
 export default App

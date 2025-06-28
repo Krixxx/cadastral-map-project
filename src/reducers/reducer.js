@@ -1,70 +1,88 @@
 import {
-  ADD_TO_CADASTRAL_ARRAY,
-  REFRESH_ARRAY,
-  SET_SELECTED_ITEM,
-  SET_CADASTRAL_DATA,
-  SET_LOADING,
-  SET_ERROR,
-  CLEAR_ERROR,
+  START_DRAWING,
+  ADD_DRAWING_POINT,
+  FINISH_DRAWING,
+  CANCEL_DRAWING,
+  SAVE_CADASTRAL_AREA,
+  DELETE_CADASTRAL_AREA,
+  SET_DRAWING_MODE,
+  SET_MAP_LAYER,
 } from '../utils/actions'
 
 //initial store
 const initialStore = {
-  cadastralList: JSON.parse(localStorage.getItem('cadastralArray')) || [],
-  bounds: [
-    [58.684863567395, 23.837261336526],
-    [58.687561865801, 23.84372545375222],
-  ],
-  activeObject: '',
-  cadastralData: null,
-  loading: false,
-  error: null,
+  // Polygon drawing state
+  drawingMode: false,
+  currentPolygon: [],
+  savedCadastralAreas:
+    JSON.parse(localStorage.getItem('savedCadastralAreas')) || [],
+  // Map layer state
+  mapLayer: localStorage.getItem('mapLayer') || 'street',
 }
 
 function reducer(state = initialStore, action) {
-  if (action.type === ADD_TO_CADASTRAL_ARRAY) {
+  if (action.type === SET_DRAWING_MODE) {
     return {
       ...state,
-      cadastralList: [...state.cadastralList, action.payload.result],
+      drawingMode: action.payload.drawingMode,
     }
   }
-  if (action.type === REFRESH_ARRAY) {
+  if (action.type === START_DRAWING) {
     return {
       ...state,
-      cadastralList: action.payload.list,
+      drawingMode: true,
+      currentPolygon: [],
     }
   }
-  if (action.type === SET_SELECTED_ITEM) {
+  if (action.type === ADD_DRAWING_POINT) {
     return {
       ...state,
-      activeObject: action.payload.item,
+      currentPolygon: [...state.currentPolygon, action.payload.point],
     }
   }
-  if (action.type === SET_CADASTRAL_DATA) {
+  if (action.type === FINISH_DRAWING) {
     return {
       ...state,
-      cadastralData: action.payload.data,
-      bounds: action.payload.data.bounds || state.bounds,
-      error: null,
+      drawingMode: false,
     }
   }
-  if (action.type === SET_LOADING) {
+  if (action.type === CANCEL_DRAWING) {
     return {
       ...state,
-      loading: action.payload.loading,
+      drawingMode: false,
+      currentPolygon: [],
     }
   }
-  if (action.type === SET_ERROR) {
+  if (action.type === SAVE_CADASTRAL_AREA) {
+    const newArea = {
+      id: Date.now().toString(),
+      polygon: state.currentPolygon,
+      ...action.payload.metadata,
+      createdAt: new Date().toISOString(),
+    }
+    const updatedAreas = [...state.savedCadastralAreas, newArea]
+    localStorage.setItem('savedCadastralAreas', JSON.stringify(updatedAreas))
     return {
       ...state,
-      error: action.payload.error,
-      loading: false,
+      savedCadastralAreas: updatedAreas,
+      currentPolygon: [],
     }
   }
-  if (action.type === CLEAR_ERROR) {
+  if (action.type === DELETE_CADASTRAL_AREA) {
+    const updatedAreas = state.savedCadastralAreas.filter(
+      (area) => area.id !== action.payload.id
+    )
+    localStorage.setItem('savedCadastralAreas', JSON.stringify(updatedAreas))
     return {
       ...state,
-      error: null,
+      savedCadastralAreas: updatedAreas,
+    }
+  }
+  if (action.type === SET_MAP_LAYER) {
+    localStorage.setItem('mapLayer', action.payload.layer)
+    return {
+      ...state,
+      mapLayer: action.payload.layer,
     }
   }
   return state
